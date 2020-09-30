@@ -14,7 +14,12 @@ import spring.aop.service.PersonService;
 @Repository("personService")
 public class PersonServiceImpl implements PersonService {
     public void sayHello() {
-//        int a = 1/0;
+        try{
+            int a = 1/0;
+        }catch (Exception e){
+            throw new RuntimeException("除数不能为0");
+        }
+
         System.out.println("Hello");
     }
 

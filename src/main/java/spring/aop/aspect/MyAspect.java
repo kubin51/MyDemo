@@ -46,6 +46,11 @@ public class MyAspect {
     public void doAfter(){
         System.out.println("最终功能");
     }
+
+    /**
+     * 目标方法中如果可能发生异常，需抛出该异常，这样 @AfterThrowing 才能捕获该异常
+     * @param e 异常信息
+     */
     @AfterThrowing(value = "a()",throwing = "e")
     public void doAfterThrowing(Throwable e){
         System.out.println("抛出了异常"+e.getMessage());
