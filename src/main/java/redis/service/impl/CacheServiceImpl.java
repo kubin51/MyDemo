@@ -1,6 +1,5 @@
 package redis.service.impl;
 
-import redis.clients.jedis.Jedis;
 import redis.service.CacheService;
 
 /**

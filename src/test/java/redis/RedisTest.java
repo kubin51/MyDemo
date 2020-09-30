@@ -2,7 +2,6 @@ package redis;
 
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
-import redis.utils.PropUtil;
 import redis.utils.RedisUtil;
 
 import java.util.Properties;

@@ -2,12 +2,9 @@ package redis.utils;
 
 import org.apache.log4j.Logger;
 
-import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
-import java.util.Properties;
 
 /**
  * @author kubin
