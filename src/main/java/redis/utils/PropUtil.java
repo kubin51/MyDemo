@@ -18,20 +18,22 @@ import java.util.Properties;
  * properties 配置文件读取工具类
  */
 public class PropUtil {
-    private static Logger LOG = LoggerFactory.getLogger(PropUtil.class);
-    private static final String[] CONFIGS = {"/redis.properties"};
+    private static final Logger LOG = LoggerFactory.getLogger(PropUtil.class);
+    private static final String[] CONFIGS = {"/redis.properties","/jdbc.properties"};
     private static final Properties PROPERTIES = new Properties();
 
-    /**
-     * 可载入多个properties文件
-     * 相同的属性在最后载入的文件中的值将会覆盖之前的值.
+    /*
+      可载入多个properties文件
+      相同的属性在最后载入的文件中的值将会覆盖之前的值.
      */
     static {
         try {
+            LOG.info("读取配置文件开始--------");
             for (String prop : CONFIGS) {
                 InputStream resource = PropUtil.class.getResourceAsStream(prop);
                 PROPERTIES.load(resource);
             }
+            LOG.info("读取配置文件完成--------");
         } catch (IOException e) {
             LOG.error("读取配置文件失败");
             e.printStackTrace();

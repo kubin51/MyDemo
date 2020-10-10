@@ -4,7 +4,8 @@ import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.utils.RedisUtil;
 
-import java.util.Properties;
+import java.sql.DriverManager;
+
 
 /**
  * @author kubin
@@ -19,6 +20,7 @@ public class RedisTest {
         String test = jedis.get("t1");
         System.out.println(test);
         Jedis jedis1 = RedisUtil.getJedis();
+        jedis1.set("test","kubin");
         String test1 = jedis1.get("test");
         System.out.println(test1);
     }
