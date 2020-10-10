@@ -2,10 +2,7 @@ package jdbc.oracle;
 
 import jdbc.oracle.utils.DBUtil;
 import org.junit.Test;
-
-import javax.sql.DataSource;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 
 /**
  * @author kubin
