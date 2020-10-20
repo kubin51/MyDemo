@@ -1,6 +1,6 @@
 package jdbc.oracle.pojo;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * @author kubin
