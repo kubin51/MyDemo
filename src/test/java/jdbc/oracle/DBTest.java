@@ -4,6 +4,7 @@ import jdbc.oracle.utils.DBUtil;
 import org.junit.Test;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * @author kubin
@@ -30,6 +31,7 @@ public class DBTest {
                 statement1.setDate(5,new Date(System.currentTimeMillis()));
                 statement1.executeUpdate();
                 conn.close();
+                Integer a = 1;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -73,5 +75,9 @@ public class DBTest {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
+    @Test
+    public void test(){
+
     }
 }
