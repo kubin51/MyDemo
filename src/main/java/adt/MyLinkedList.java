@@ -182,6 +182,50 @@ public class MyLinkedList<T> implements Iterable<T> {
         return p;
     }
 
+    /**
+     * 自己写的，很low，运行也很慢
+     * @param data
+     * @return
+     */
+    public Boolean contains2(T data){
+        Iterator<T> iterator = this.iterator();
+        while(iterator.hasNext()){
+            if(iterator.next() == data){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 自己写的，也很low，不过耗时跟网上的差不多
+     * @param data
+     * @return
+     */
+    public Boolean contains3(T data){
+        Node<T> p = beginNode.nextNode;
+        while(p!=endNode){
+            if(p.data == data){
+                return true;
+            }
+            p = p.nextNode;
+        }
+        return false;
+    }
+
+    /**
+     * 网上搜的，很快（羞愧）
+     * @param x
+     * @return
+     */
+    public boolean contains(T x) {
+        Node<T> p = beginNode.nextNode;
+        while (p != endNode && !(p.data == x)) { //将判断置于while循环条件里。
+            p = p.nextNode;
+        }
+        return (p != endNode); //这里返回的是 是否到达末尾。更简化了，而不是上述答案中的两个return。
+    }
+
     public Iterator<T> iterator() {
         return new MyLinkedListIterator();
     }

@@ -70,11 +70,16 @@ public class ADTTest {
                 iterator.remove();
             }
         }*/
-        for(int i=0;i<linkedList.size();i++){
+        /*for(int i=0;i<linkedList.size();i++){
             if(linkedList.get(i)%2==0){
                 linkedList.set(i,1000);
             }
-        }
+        }*/
+//        1016500
+        long start = System.nanoTime();
+        Boolean contains = linkedList.contains3(2);
+        long end = System.nanoTime();
+        System.out.println("耗时："+(end-start)+"，结果为："+contains);
         System.out.println(linkedList);
     }
 }
