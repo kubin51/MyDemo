@@ -89,6 +89,22 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * 清除当前集合下包含指定集合的项
+     * @param items 指定集合
+     */
+    public void removeAll(Iterable<? extends T> items){
+        modCount++;
+        for (T item : items) {
+            Iterator<T> iterator = this.iterator();
+            while(iterator.hasNext()){
+                if(iterator.next() == item){
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    /**
      * 删除指定的节点
      *
      * @param index 指定的节点索引

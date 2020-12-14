@@ -3,6 +3,7 @@ package adt;
 import java.lang.Object;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -27,9 +28,26 @@ public class MyArrayList<T> implements Iterable<T> {
      */
     private static final Integer DEFAULT_CAPACITY = 10;
 
+    public MyArrayList(List datas){
+        size = 0;
+        ensureCapacity(DEFAULT_CAPACITY);
+        addAll(datas);
+    }
+
     public MyArrayList() {
         size = 0;
         ensureCapacity(DEFAULT_CAPACITY);
+    }
+
+    /**
+     * 添加指定的集合到当前集合的末尾
+     * @param items 指定集合
+     */
+    public void addAll(Iterable<? extends T> items){
+        Iterator<? extends T> iterator = items.iterator();
+        while(iterator.hasNext()){
+            add(iterator.next());
+        }
     }
 
     public Boolean add(T item) {

@@ -1,6 +1,9 @@
 package adt;
 
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -31,24 +34,12 @@ public class ADTTest {
 
     @Test
     public void test1() {
-        MyArrayList<String> list = new MyArrayList<String>();
-        list.add("ku");
-        list.add("ku");
-        list.add("xiao");
-        list.add("shuai");
-        list.add("bin");
-        list.add("fang");
-        list.add("bin");
-        list.add("da");
-        list.add("shuai");
+        MyArrayList<String> list = new MyArrayList<String>(Arrays.asList("ku","ku","xiao","shuai","bin"));
         list.add("ge");
-        list.add("zhen");
-        list.add("de");
-        list.add("shuai");
         Iterator<String> iterator = list.iterator();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).contains("fang")) {
-                list.set(i, "ku");
+            if (list.get(i).contains("xiao")) {
+                list.set(i, "da");
             }
         }
         System.out.println(list);
@@ -63,6 +54,8 @@ public class ADTTest {
         linkedList.add(2);
         linkedList.add(4);
         linkedList.add(5);
+        linkedList.removeAll(new ArrayList<Integer>(Arrays.asList(0,4,6)));
+        System.out.println(linkedList);
         /*Iterator<Integer> iterator = linkedList.iterator();
         while (iterator.hasNext()) {
             Integer item = iterator.next();
@@ -76,11 +69,11 @@ public class ADTTest {
             }
         }*/
 //        1016500
-        long start = System.nanoTime();
-        Boolean contains = linkedList.contains3(2);
-        long end = System.nanoTime();
-        System.out.println("耗时："+(end-start)+"，结果为："+contains);
-        System.out.println(linkedList);
+//        long start = System.nanoTime();
+//        Boolean contains = linkedList.contains3(2);
+//        long end = System.nanoTime();
+//        System.out.println("耗时："+(end-start)+"，结果为："+contains);
+//        System.out.println(linkedList);
     }
 }
 //14488-3634
