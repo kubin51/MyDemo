@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.ListIterator;
 
 /**
- * Josephus问题(Josephus problem)是下面的游戏: N 个人编号从1到 N，围坐成一个圆圈。从1号开始传递一一个热土豆。
+ * Josephus问题(Josephus problem)是下面的游戏: N 个人编号从1到 N，围坐成一个圆圈。从1号开始传递热土豆。
  * 经过 M 次传递后拿着热土豆的人被清除离座，围坐的圆圈缩紧，由坐在被清除的人后面的人拿起热土豆继续进行游戏。最后剩下的人取胜。
  * 因此，如果 M = 0 和 N = 5,则游戏人依序被清除，5号游戏人获胜。如果 M = 1 和 N = 5，那么被清除的人的顺序是 2，4，1，5。
  * <p>
@@ -21,17 +21,21 @@ import java.util.ListIterator;
 public class Topic6 {
     @Test
     public void test() {
-        int m = 6;
-        int n = 8;
-        pass(m,n);
+        int m = 2;
+        int n = 41;
+        long start = System.nanoTime();
+        pass(m, n);
+        long end = System.nanoTime();
+        System.out.println("耗时："+(end-start));
     }
 
     /**
-     * 网上的实现，自己不会
+     * 网上的实现
+     *
      * @param m
      * @param n
      */
-    public static void pass(int m, int n) {
+    public void pass(int m, int n) {
         int i, j, mPrime, numLeft;
         ArrayList<Integer> L = new ArrayList<Integer>();
         for (i = 1; i <= n; i++) {
@@ -41,8 +45,8 @@ public class Topic6 {
         ListIterator<Integer> iter = L.listIterator();
         Integer item = 0;
         numLeft = n;
-        /* -------------- 开始 N 次清除 -------------- */
-        for (i = 0; i < n; i++) {
+        /* -------------- 开始 N-1 次清除 -------------- */
+        for (i = 0; i < n - 1; i++) {
             //第一条关系应用，去除不必要的绕圈。
             mPrime = m % numLeft;
             //第一条关系后，根据第二条关系判定要往前还是往后走。
@@ -82,7 +86,29 @@ public class Topic6 {
             System.out.println();
             numLeft--;
         }
-        /* -------------- 结束 N 次清除 -------------- */
+        /* -------------- 结束 N-1 次清除 -------------- */
         System.out.println();
+    }
+
+    /**
+     * 自己的实现，比网上的快
+     * @param m
+     * @param n
+     */
+    public void pass2(int m, int n) {
+        // 起始位置下标
+        int index = 0;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        // 初始化人员
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+        while (list.size() > 1) {
+            // 求出下一次要移除的下标
+            index = (index + m) % list.size();
+            System.out.println("remove: "+list.get(index));
+            list.remove(index);
+        }
+        System.out.println(list.get(0));
     }
 }
