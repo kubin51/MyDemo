@@ -152,7 +152,7 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     /**
-     * 在集合的末尾添加节点
+     * 在集合的指定节点前添加节点
      *
      * @param node 被添加的节点的后一个节点
      * @param item 被添加的节点内容
@@ -251,6 +251,43 @@ public class MyLinkedList<T> implements Iterable<T> {
         return (p != endNode); //这里返回的是 是否到达末尾。更简化了，而不是上述答案中的两个return。
     }
 
+    public void addFirst(T x){
+        addBefore(beginNode.nextNode,x);
+    }
+    public void addLast(T x){
+        add(x);
+    }
+    public T removeFirst(){
+        T data = beginNode.nextNode.data;
+        if(data == null){
+            throw new RuntimeException("暂无数据");
+        }
+        remove(beginNode.nextNode);
+        return data;
+    }
+    public T removeLast(){
+        T data = endNode.prevNode.data;
+        if(data == null){
+            throw new RuntimeException("暂无数据");
+        }
+        remove(endNode.prevNode);
+        return data;
+    }
+    public T getFirst(){
+        T data = get(0);
+        if(data == null){
+            throw new RuntimeException("暂无数据");
+        }
+        return data;
+    }
+    public T getLest(){
+        T data = endNode.prevNode.data;
+        if(data == null){
+            throw new RuntimeException("暂无数据");
+        }
+        return data;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new MyIterator();
@@ -308,7 +345,6 @@ public class MyLinkedList<T> implements Iterable<T> {
 
     /**
      * 集合迭代器类
-     * @return
      */
     class MyListIterator extends MyIterator implements ListIterator<T>{
 

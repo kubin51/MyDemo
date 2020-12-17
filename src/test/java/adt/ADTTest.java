@@ -57,13 +57,6 @@ public class ADTTest {
         linkedList.add(2);
         linkedList.add(4);
         linkedList.add(5);
-        ListIterator<Integer> listIterator = linkedList.listIterator();
-        while(listIterator.hasNext()){
-            Integer value = listIterator.next();
-            if(value == 3){
-                System.out.println(listIterator.previous());
-            }
-        }
         System.out.println(linkedList);
     }
 
