@@ -1,9 +1,6 @@
 package adt;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * 自定义实现LinkedList
@@ -143,6 +140,18 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     /**
+     * 设置集合指定节点的节点内容
+     * @param node 要设置内容的节点
+     * @param item 指定的内容
+     * @return 返回原节点内容
+     */
+    public T set(Node<T> node,T item){
+        T old = node.data;
+        node.data = item;
+        return old;
+    }
+
+    /**
      * 在集合的末尾添加节点
      *
      * @param node 被添加的节点的后一个节点
@@ -242,16 +251,21 @@ public class MyLinkedList<T> implements Iterable<T> {
         return (p != endNode); //这里返回的是 是否到达末尾。更简化了，而不是上述答案中的两个return。
     }
 
+    @Override
     public Iterator<T> iterator() {
-        return new MyLinkedListIterator();
+        return new MyIterator();
+    }
+
+    public ListIterator<T> listIterator(){
+        return new MyListIterator();
     }
 
     /**
      * 迭代器类
      */
-    class MyLinkedListIterator implements Iterator<T> {
-        private Node<T> current = beginNode.nextNode;
-        private Integer expectedModCount = modCount;
+    class MyIterator implements Iterator<T> {
+        public Node<T> current = beginNode.nextNode;
+        public Integer expectedModCount = modCount;
         private Boolean okToRemove = false;
 
         /**
@@ -259,10 +273,12 @@ public class MyLinkedList<T> implements Iterable<T> {
          *
          * @return true:有值，false:没有值
          */
+        @Override
         public boolean hasNext() {
             return current != endNode;
         }
 
+        @Override
         public T next() {
             if (!modCount.equals(expectedModCount)) {
                 throw new ConcurrentModificationException();
@@ -276,6 +292,7 @@ public class MyLinkedList<T> implements Iterable<T> {
             return data;
         }
 
+        @Override
         public void remove() {
             if (!modCount.equals(expectedModCount)) {
                 throw new ConcurrentModificationException();
@@ -286,6 +303,49 @@ public class MyLinkedList<T> implements Iterable<T> {
             MyLinkedList.this.remove(current.prevNode);
             expectedModCount++;
             okToRemove = false;
+        }
+    }
+
+    /**
+     * 集合迭代器类
+     * @return
+     */
+    class MyListIterator extends MyIterator implements ListIterator<T>{
+
+        @Override
+        public boolean hasPrevious() {
+            return current.prevNode != beginNode.nextNode;
+        }
+
+        @Override
+        public T previous() {
+            if(hasPrevious()){
+                return current.prevNode.prevNode.data;
+            }else{
+                throw new IndexOutOfBoundsException();
+            }
+        }
+
+        @Override
+        public int nextIndex() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int previousIndex() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void set(T t) {
+            expectedModCount++;
+            MyLinkedList.this.set(current.prevNode,t);
+        }
+
+        @Override
+        public void add(T t) {
+            expectedModCount++;
+            MyLinkedList.this.addBefore(current,t);
         }
     }
 

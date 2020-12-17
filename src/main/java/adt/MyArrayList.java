@@ -2,9 +2,7 @@ package adt;
 
 import java.lang.Object;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * 自定义实现 ArrayList
@@ -28,7 +26,7 @@ public class MyArrayList<T> implements Iterable<T> {
      */
     private static final Integer DEFAULT_CAPACITY = 10;
 
-    public MyArrayList(List datas){
+    public MyArrayList(List datas) {
         size = 0;
         ensureCapacity(DEFAULT_CAPACITY);
         addAll(datas);
@@ -41,11 +39,12 @@ public class MyArrayList<T> implements Iterable<T> {
 
     /**
      * 添加指定的集合到当前集合的末尾
+     *
      * @param items 指定集合
      */
-    public void addAll(Iterable<? extends T> items){
+    public void addAll(Iterable<? extends T> items) {
         Iterator<? extends T> iterator = items.iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             add(iterator.next());
         }
     }
@@ -62,7 +61,6 @@ public class MyArrayList<T> implements Iterable<T> {
      * @param item  添加的新元素的内容
      */
     public void add(Integer index, T item) {
-        rangeCheck(index);
         // 容量满了，两倍扩容
         if (items.length == size) {
             ensureCapacity(size * 2);
@@ -139,22 +137,32 @@ public class MyArrayList<T> implements Iterable<T> {
         }
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new MyIterator();
+    }
+
+    public ListIterator<T> listIterator() {
+        return new MyListIterator();
+    }
+
     /**
      * 迭代器类
      */
-    private class MyArrayListIterator implements Iterator<T> {
+    private class MyIterator implements Iterator<T> {
         /**
          * 当前位置
          */
-        private Integer current = 0;
+        public Integer current = 0;
 
         /**
          * 判断集合还是否有值
          *
          * @return true:有，false:没有
          */
+        @Override
         public boolean hasNext() {
-            return current < items.length;
+            return current < size;
         }
 
         /**
@@ -162,9 +170,10 @@ public class MyArrayList<T> implements Iterable<T> {
          *
          * @return 集合的下一项
          */
+        @Override
         public T next() {
             if (!hasNext()) {
-                throw new NoSuchElementException();
+                throw new IndexOutOfBoundsException();
             }
             return items[current++];
         }
@@ -172,14 +181,53 @@ public class MyArrayList<T> implements Iterable<T> {
         /**
          * 删除集合的当前项
          */
+        @Override
         public void remove() {
             MyArrayList.this.remove(--current);
         }
 
     }
 
-    public Iterator<T> iterator() {
-        return new MyArrayListIterator();
+    /**
+     * 集合迭代器类
+     */
+    private class MyListIterator extends MyIterator implements ListIterator<T> {
+
+        @Override
+        public boolean hasPrevious() {
+            return current != 0;
+        }
+
+        @Override
+        public T previous() {
+            rangeCheck(current - 2);
+            return MyArrayList.this.get(current - 2);
+        }
+
+        @Override
+        public int nextIndex() {
+            if(current>=size){
+                throw new IndexOutOfBoundsException();
+            }
+            return current;
+        }
+
+        @Override
+        public int previousIndex() {
+            rangeCheck(current - 2);
+            return current - 2;
+        }
+
+        @Override
+        public void set(T t) {
+            MyArrayList.this.set(current-1, t);
+        }
+
+        @Override
+        public void add(T t) {
+            MyArrayList.this.add(current-1, t);
+            current++;
+        }
     }
 
     @Override
@@ -198,7 +246,7 @@ public class MyArrayList<T> implements Iterable<T> {
      * @param index 指定数组下标
      */
     public void rangeCheck(Integer index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index > items.length-1) {
             throw new IndexOutOfBoundsException();
         }
     }

@@ -22,9 +22,9 @@ public class Topic6 {
     @Test
     public void test() {
         int m = 2;
-        int n = 41;
+        int n = 164;
         long start = System.nanoTime();
-        pass(m, n);
+        pass2(m, n);
         long end = System.nanoTime();
         System.out.println("耗时："+(end-start));
     }
