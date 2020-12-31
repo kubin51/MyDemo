@@ -3,6 +3,7 @@ package adt;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author kubin
@@ -71,6 +72,17 @@ public class ADTTest {
         System.arraycopy(list.toArray(),0,list.toArray(),1,list.size()-1);
         long end = System.nanoTime();
         System.out.println("耗时："+(end-start));
+    }
+
+    @Test
+    public void test4(){
+        CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<Integer>(Arrays.asList(1,null,6,3));
+        int i = list.indexOf(null);
+        System.out.println(i);
+    }
+    @Test
+    public void test5(){
+
     }
 }
 //14488-3634
